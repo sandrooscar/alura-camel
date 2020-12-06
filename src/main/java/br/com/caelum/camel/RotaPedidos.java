@@ -14,7 +14,10 @@ public class RotaPedidos {
 
 			@Override
 			public void configure() throws Exception {
-				from("file:pedidos?delay=5s").
+				//monitora a cada 5 segundos, noop=true-> mantêm os arquivos na pasta original
+				from("file:pedidos?delay=5s&noop=true").
+					//imprime o id gerado pelo camel, body-> corpo do arquivo
+					log("${id} ${body}").
 				to("file:saida");
 			}
 			

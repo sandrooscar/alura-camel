@@ -1,1 +1,80 @@
-DSL-Domain Specific Language
+*** DSL-Domain Specific Language
+Apache Camel é um framework Java de código aberto que tenta deixar a integração mais simples e acessível para todos os desenvolvedores. Ele faz isso através de:
+
+Implementações concretas dos padrões de integração (EIP)
+Conectividade com uma grande variedade de protocolos e APIs
+Uso de uma Domain Specific Languages (DSLs) para amarrar os EIPs e protocolos
+Segundo os autores do framework, o significado de Camel é: - Concise - Application - Message - Exchange - Language.
+
+*** Geração ID
+Para gerar a id, o Camel usa o nome da máquina na rede concatenado com um seed.
+
+Em casos raros, pode ser preciso personalizar a geração dessa id. Isso pode ser feito a partir do CamelContext, passando um gerador propriamente implementado:
+
+context.setUuidGenerator(new MeuGeradorPersonalizado());
+
+*** FLUXO BIDIRECIONAL - Message Exchange Pattens (MEP)
+O fluxo pode ser bidirecional sim! Veja o exemplo de uma rota abaixo:
+
+HTTP <-------> log  <-------> HTTPCOPIAR CÓDIGO
+Nesse caso, temos uma mensagem de ida (IN) e uma de volta (OUT). Para representar o IN e o OUT, o Exchange Message é na verdade um container. Esse container guarda então as mensagens e outras informações como a id, cabeçalhos e propriedades:
+
+
+
+Tudo bem até aqui?
+
+No mundo dos padrões de integração (EIP), o exemplo unidirecional é chamado de Event Message ou InOnly. O exemplo bidirecional é chamado de Request-Reply ou InOut. Event Message e Request-Reply são Message Exchange Pattens (MEP).
+
+Ambos os padrões são representados por meio de um Exchange Pattern, que podemos imprimir na rota:
+
+from("file:pedidos").
+  log("${exchange.pattern}"). 
+  log("${id} - ${body}").
+to("file:saida");COPIAR CÓDIGO
+Segue o link do Camel, que possui mais informações sobre MEP: http://camel.apache.org/exchange-pattern.html
+
+Eu sei que tudo isso é um vocabulário bastante diferente, mas vamos devagar. Com o tempo, ficará mais simples usar todos esses padrões e definições. Bem-vindo ao mundo de integração com Apache Camel.
+
+*** ESTILOS DE INTEGRAÇÃO
+Você nunca ouviu falar dos estilos de integração? Não tem problema!!
+
+Já falamos que integração é algo difícil e por isso sempre há mais de uma abordagem ou forma de integração de aplicações, cada qual com sua especificidade. Se as necessidades de integração eram sempre as mesmas, só haveria uma forma ou um estilo de integração.
+
+Os 4 estilos de integração identificados são: File Transfer (Troca de arquivos), Messaging (Mensageria), Shared Database (Banco compartilhado) e Remote Procedure Call (Chamada de procedimento remotamente).
+
+No famoso livro chamado Enterprise Integration Patterns, são descritos vários padrões de integração com mais detalhes:
+
+http://www.enterpriseintegrationpatterns.com/patterns/messaging/IntegrationStylesIntro.html
+
+Na nossa primeira rota com Camel, usamos um estilo: o File Sharing. Um exemplo concreto do Messaging é JMS com ActiveMQ, que usaremos mais pra frente. O estilo Shared Database é nada mais que um banco com uma tabela em que duas aplicações acessam/compartilham. Vamos testar isso nos exercícios. Um exemplo concreto do RPC (Remote Procedure Call) é SOAP, que também faz parte do treinamento.
+
+*** SPRING COM CAMEL
+Para saber mais: Camel com Spring
+PRÓXIMA ATIVIDADE
+
+Nas aulas, utilizamos o Apache Camel de maneira standalone. É comum no mercado, subir a nossa implementação Camel usando o Spring - que inclusive possui boa integração com o Camel. Assim podemos rodar o Spring com Camel dentro de um servlet container como o Tomcat ou Jetty com pouca configuração:
+
+Dentro do arquivo de configuração do Spring devemos declarar o CamelContext:
+
+<context:component-scan base-package="br.com.meupacote"/>
+
+<camelContext xmlns="http://camel.apache.org/schema/spring">
+    <contextScan/>
+</camelContext>COPIAR CÓDIGO
+Agora podemos injetar o CamelContext ou, usando a classe SpringRouteBuilder, definiremos a nova rota dentro de um Spring Bean:
+
+/**
+ * Estendendo a classe SpringRouteBuilder não é preciso adicionar a rota programaticamente.
+ */
+@Component
+public class MinhaRota extends SpringRouteBuilder {
+
+    @Override
+    public void configure() throws Exception {
+        //aqui vem a rota!!
+    }
+
+}COPIAR CÓDIGO
+Obs: Esse exercício foi submetido pelo aluno Anderson.
+
+

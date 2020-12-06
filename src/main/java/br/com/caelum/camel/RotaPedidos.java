@@ -18,6 +18,9 @@ public class RotaPedidos {
 				from("file:pedidos?delay=5s&noop=true").
 					//imprime o id gerado pelo camel, body-> corpo do arquivo
 					log("${id} ${body}").
+					marshal().xmljson().
+					log("${body}").
+					setHeader("CamelFileName", simple("${file:name.noext}.json")).
 				to("file:saida");
 			}
 			

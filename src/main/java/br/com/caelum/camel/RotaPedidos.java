@@ -16,10 +16,15 @@ public class RotaPedidos {
 			public void configure() throws Exception {
 				//monitora a cada 5 segundos, noop=true-> mantêm os arquivos na pasta original
 				from("file:pedidos?delay=5s&noop=true").
+				split().
+					xpath("/pedido/itens/item").
+				filter().
+					xpath("/item/formato[text()='EBOOK']").
 					//imprime o id gerado pelo camel, body-> corpo do arquivo
-					log("${id} ${body}").
-					marshal().xmljson().
-					log("${body}").
+					//log("${id} ${body}").
+				marshal().
+					xmljson().
+				log("${body}").
 					setHeader("CamelFileName", simple("${file:name.noext}.json")).
 				to("file:saida");
 			}

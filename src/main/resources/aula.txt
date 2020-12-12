@@ -77,4 +77,7 @@ public class MinhaRota extends SpringRouteBuilder {
 }COPIAR CÓDIGO
 Obs: Esse exercício foi submetido pelo aluno Anderson.
 
+*** AULA02 - 
+- Marshal e Unmarshal se referem a transformação de um objeto para um outro formato e vice-versa. Por exemplo, usando o padrão JAX-B podemos facilmente transformar um objeto em XML usando marshal/unmarshal
+- O interessante é que todos os métodos adicionados nas opções desse exercício também existem. O método xstream() é responsável por gerar um XML, a partir do objeto Java. O método serialization() usa a serialização do Java IO e o método jacksonxml() transforma um JSON em um XML (usando a biblioteca de JSON Jackson).
 

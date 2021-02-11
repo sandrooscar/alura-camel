@@ -25,8 +25,8 @@ public class RotaPedidos {
 				marshal().
 					xmljson().
 				log("${body}").
-					setHeader("CamelFileName", simple("${file:name.noext}-${header.CamelSplitIndex}.json")).
-				to("file:saida");
+					//setHeader("CamelFileName", simple("${file:name.noext}-${header.CamelSplitIndex}.json")).
+				to("http4://localhost:8080/webservices/ebook/item");
 			}
 			
 		});

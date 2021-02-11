@@ -1,6 +1,7 @@
 package br.com.caelum.camel;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 
@@ -25,7 +26,7 @@ public class RotaPedidos {
 				marshal().
 					xmljson().
 				log("${body}").
-					//setHeader("CamelFileName", simple("${file:name.noext}-${header.CamelSplitIndex}.json")).
+					setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST)).
 				to("http4://localhost:8080/webservices/ebook/item");
 			}
 			

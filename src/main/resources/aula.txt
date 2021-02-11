@@ -81,3 +81,10 @@ Obs: Esse exercício foi submetido pelo aluno Anderson.
 - Marshal e Unmarshal se referem a transformação de um objeto para um outro formato e vice-versa. Por exemplo, usando o padrão JAX-B podemos facilmente transformar um objeto em XML usando marshal/unmarshal
 - O interessante é que todos os métodos adicionados nas opções desse exercício também existem. O método xstream() é responsável por gerar um XML, a partir do objeto Java. O método serialization() usa a serialização do Java IO e o método jacksonxml() transforma um JSON em um XML (usando a biblioteca de JSON Jackson).
 
+*** AULA03 - item 3
+- Camel envia um POST automaticamente. Esse é o padrão do Camel quando há um corpo (body) da mensagem 
+--uso de constant e exchange
+Observe que usamos o método constant() no valor do header, responsável por definir o método HTTP. Como o Camel já tinha usado um POST, o resultado será o mesmo se executarmos novamente.
+
+Repare também que usamos outra constante, mas da classe Exchange para definir a chave do cabeçalho. A classe Exchange é fundamental no Camel, não só para o uso de constantes como também para trabalhar com a mensagem em si. Uma mensagem no Camel é do tipo Exchange. Veremos ainda mais sobre esta classe.
+

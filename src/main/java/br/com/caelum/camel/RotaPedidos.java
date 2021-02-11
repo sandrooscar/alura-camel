@@ -26,7 +26,8 @@ public class RotaPedidos {
 				marshal().
 					xmljson().
 				log("${body}").
-					setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST)).
+					setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.GET)).
+					setHeader(Exchange.HTTP_QUERY, constant("clienteId=breno@abc.com&pedidoId=123&ebookId=ARQ")).
 				to("http4://localhost:8080/webservices/ebook/item");
 			}
 			

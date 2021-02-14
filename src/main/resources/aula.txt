@@ -96,9 +96,18 @@ Uma vez guardada uma propriedade, podemos recuperá-la por meio da Expression lan
 
 simple(“${property.pedidoId}”)
 
-O que aprendemos?
+** Criterios para definicao de rotas
+O Camel precisa decidir e ele segue alguns critérios:
+
+O Camel usa o método HTTP configurado na rota (na rota não configuramos nada, essa regra não se aplica então).
+Usa-se o GET se há uma query string configurada (ainda não fizemos isso, também não aplica).
+Usa-se o POST se o body não for nulo (o body existe, então, aplica-se POST).
+Usa-se GET como último caso.
+ 
+** O que aprendemos?
 trabalhar com o componente http4;
 enviar GET e POST;
 definir params da requisição GET;
 definir e recuperar propriedades na rota.
+
 

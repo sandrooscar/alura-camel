@@ -104,6 +104,24 @@ Usa-se o GET se há uma query string configurada (ainda não fizemos isso, também 
 Usa-se o POST se o body não for nulo (o body existe, então, aplica-se POST).
 Usa-se GET como último caso.
  
+ ** Constnt e simple - diferenças
+ o método simple(..) interpreta a Expression Language. Por exemplo usamos o simple(..) para ler uma propriedade:
+
+...
+setHeader(Exchange.HTTP_QUERY,  simple("clienteId=${property.clienteId}&pedidoId=${property.pedidoId}&ebookId=${property.ebookId}")).
+...COPIAR CÓDIGO
+O método constant(..) serve para transformar um valor fixo em uma expressão:
+
+setHeader(Exchange.FILE_NAME, constant("index.html")).COPIAR CÓDIGO
+Repare também que o método xpath() também devolve uma Expression:
+
+Expression expr = xpath("/pedido/id/text()")COPIAR CÓDIGO
+Seguem os links da documentação dos métodos constant(..) e simple(..):
+
+http://camel.apache.org/constant.html
+
+http://camel.apache.org/simple.html
+
 ** O que aprendemos?
 trabalhar com o componente http4;
 enviar GET e POST;

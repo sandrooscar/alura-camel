@@ -88,3 +88,17 @@ Observe que usamos o método constant() no valor do header, responsável por defin
 
 Repare também que usamos outra constante, mas da classe Exchange para definir a chave do cabeçalho. A classe Exchange é fundamental no Camel, não só para o uso de constantes como também para trabalhar com a mensagem em si. Uma mensagem no Camel é do tipo Exchange. Veremos ainda mais sobre esta classe.
 
+**Guardar deados da rota
+ método setProperty que serve para guardar dados da rota:
+
+setProperty("pedidoId", xpath("/pedido/id/text()"))COPIAR CÓDIGO
+Uma vez guardada uma propriedade, podemos recuperá-la por meio da Expression language usando o método simple():
+
+simple(“${property.pedidoId}”)
+
+O que aprendemos?
+trabalhar com o componente http4;
+enviar GET e POST;
+definir params da requisição GET;
+definir e recuperar propriedades na rota.
+

@@ -129,7 +129,7 @@ definir params da requisição GET;
 definir e recuperar propriedades na rota.
 
 *** AULA04 - legibilidade 
-Usamos o componente direct com o objetivo de facilitar a manutenção e a legibilidade:
+* Usamos o componente direct com o objetivo de facilitar a manutenção e a legibilidade:
 
 from("file:pedidos?delay=5s").
 to("direct:http").
@@ -143,7 +143,25 @@ from("direct:soap").
 log("chamando servico soap")
 to("mock:soap");
 
-O que aprendemos?
+* O multicast() possui uma configuração para chamar cada sub-rota em uma Thread separada. Assim as sub-rotas serão processadas em paralelo:
+
+from("file:pedidos?delay=5s&noop=true").
+    multicast().
+        parallelProcessing().
+            to("direct:soap").
+            to("direct:http");COPIAR CÓDIGO
+Devemos ter cuidado com essa opção, pois possíveis problemas (exceções) também ocorrem em paralelo que pode complicar a análise do problema.
+
+Podemos definir um timeout no processamento:
+
+from("file:pedidos?delay=5s&noop=true").
+    multicast().
+        parallelProcessing().
+            timeout(500). //millis
+                to("direct:soap").
+                to("direct:http");
+                
+* O que aprendemos?
 dividir a rota em sub-rotas;
 chamar uma sub-rota com direct;
 enviar a mesma mensagem pelo multicast;

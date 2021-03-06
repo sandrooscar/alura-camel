@@ -128,4 +128,10 @@ enviar GET e POST;
 definir params da requisição GET;
 definir e recuperar propriedades na rota.
 
+*** AULA04 - legibilidade 
+O que aprendemos?
+dividir a rota em sub-rotas;
+chamar uma sub-rota com direct;
+enviar a mesma mensagem pelo multicast;
+identificar a rota através da routeId.
 

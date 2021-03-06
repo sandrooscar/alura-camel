@@ -17,9 +17,19 @@ public class RotaPedidos {
 			public void configure() throws Exception {
 				//monitora a cada 5 segundos, noop=true-> mantêm os arquivos na pasta original
 				from("file:pedidos?delay=5s&noop=true").
-				setProperty("pedidoId", xpath("/pedido/id/text()")).
-				setProperty("clienteId", xpath("/pedido/pagamento/email-titular/text()")).
+			    	routeId("rota-pedidos").
+			    	multicast().
+			        	to("direct:soap").
+			        	to("direct:http");				
+				from("direct:soap").
+			    	routeId("rota-soap").
+			    	log("chamando servico soap ${body}").
+			    to("mock:soap");
 				
+				from("direct:http").
+			    	routeId("rota-http").
+			    	setProperty("pedidoId", xpath("/pedido/id/text()")).
+			    	setProperty("clienteId", xpath("/pedido/pagamento/email-titular/text()")).
 				split().
 					xpath("/pedido/itens/item").
 				filter().
